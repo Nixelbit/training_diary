@@ -1,0 +1,9 @@
+<h1>Мои тренировки</h1>
+
+<% @workouts.each do |w| %>
+  <ul>
+    <li>
+      <%= w.name %> - <%= w.date %>
+    </li>
+  </ul>
+<% end %>
