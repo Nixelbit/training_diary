@@ -5,7 +5,7 @@
 <% @workouts.each do |w| %>
   <ul>
     <li>
-      <%= w.name %> - <%= w.date %>
+      <%= link_to w.name, workout_path(w) %> - <%= w.date %>
     </li>
   </ul>
 <% end %>
