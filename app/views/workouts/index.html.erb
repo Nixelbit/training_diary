@@ -1,5 +1,7 @@
 <h1>Мои тренировки</h1>
 
+<%= link_to "Создать новую тренировку", new_workout_path %>
+
 <% @workouts.each do |w| %>
   <ul>
     <li>
