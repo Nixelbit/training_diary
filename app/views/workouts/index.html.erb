@@ -2,10 +2,10 @@
 
 <%= link_to "Создать новую тренировку", new_workout_path %>
 
-<% @workouts.each do |w| %>
+<% @workouts.each do |workout| %>
   <ul>
     <li>
-      <%= link_to w.name, workout_path(w) %> - <%= w.date %>
+      <%= link_to workout.name, workout_path(workout) %> - <%= workout.date %>
     </li>
   </ul>
 <% end %>
