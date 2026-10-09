@@ -8,7 +8,7 @@ class WorkoutsController < ApplicationController
   end
 
   def create
-    @workout = User.second.workouts.build workout_params
+    @workout = User.second.workouts.build(workout_params)
 
     if @workout.save
       redirect_to workouts_path
