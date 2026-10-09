@@ -4,10 +4,22 @@
 
 <h3>Упражнения</h3>
 
-<% @workout.workout_exercises.each do |workout_exercise| %>
-  <ul>
-    <li>
-      <%= workout_exercise.exercise.name %>
-    </li>
-  </ul>
-<% end %>
+<ul>
+  <% @workout.workout_exercises.each do |workout_exercise| %>
+      <li>
+        <h4><%= workout_exercise.exercise.name %></h4>
+
+        <ul>
+          <% workout_exercise.exercise_sets.each do |exercise_set| %>
+            <li>
+              <strong>Подход: №<%= exercise_set.position %>:</strong>
+              <%= exercise_set.weight %> кг х <%= exercise_set.repetitions %> повторений
+              <% if exercise_set.notes.present? %>
+                <small>(Примечание: <%= exercise_set.notes %>)</small>
+              <% end %>
+            </li>
+          <% end %>
+        </ul>
+      </li>
+  <% end %>
+</ul>
