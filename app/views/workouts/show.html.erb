@@ -1,3 +1,13 @@
 <h1><%= @workout.name %></h1>
 
 <p><%= @workout.date %></p>
+
+<h3>Упражнения</h3>
+
+<% @workout.workout_exercises.each do |workout_exercise| %>
+  <ul>
+    <li>
+      <%= workout_exercise.exercise.name %>
+    </li>
+  </ul>
+<% end %>
