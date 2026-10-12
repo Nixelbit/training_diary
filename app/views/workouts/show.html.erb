@@ -3,6 +3,8 @@
 <p><%= @workout.date %></p>
 
 <%= link_to "Редактировать тренировку", edit_workout_path(@workout) %>
+<%= button_to "Удалить тренировку", workout_path(@workout), method: :delete,
+  form: { data: { turbo_confirm: "Вы уверены, что хотите удалить тренировку?" } } %>
 
 <h3>Упражнения</h3>
 
