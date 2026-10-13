@@ -18,15 +18,15 @@ class WorkoutsController < ApplicationController
   end
 
   def show
-    @workout = Workout.find(params[:id])
+    find_workout
   end
 
   def edit
-    @workout = Workout.find(params[:id])
+    find_workout
   end
 
   def update
-    @workout = Workout.find(params[:id])
+    find_workout
 
     if @workout.update(workout_params)
       redirect_to workout_path(@workout)
@@ -36,7 +36,7 @@ class WorkoutsController < ApplicationController
   end
 
   def destroy
-    @workout = Workout.find(params[:id])
+    find_workout
 
     @workout.destroy
 
@@ -44,6 +44,10 @@ class WorkoutsController < ApplicationController
   end
 
   private
+
+  def find_workout
+    @workout = Workout.find(params[:id])
+  end
 
   def workout_params
     params.require(:workout).permit(:date, :name)
