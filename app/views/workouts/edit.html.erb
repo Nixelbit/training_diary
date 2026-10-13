@@ -1,17 +1,5 @@
 <h1>Редактирование тренировки</h1>
 
-<%= form_with model: @workout do |f| %>
-  <div>
-    <%= f.label :name %>
-    <%= f.text_field :name %>
-  </div>
-
-  <div>
-    <%= f.label :date %>
-    <%= f.date_field :date %>
-  </div>
-
-  <%= f.submit "Сохранить изменения" %>
-<% end %>
+<%= render "workouts/form", workout: @workout %>
 
 <%= link_to "Назад к тренировке", workout_path(@workout) %>
