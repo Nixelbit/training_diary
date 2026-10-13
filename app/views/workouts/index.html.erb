@@ -1,0 +1,11 @@
+<h1>Мои тренировки</h1>
+
+<%= link_to "Создать новую тренировку", new_workout_path %>
+
+<% @workouts.each do |workout| %>
+  <ul>
+    <li>
+      <%= link_to workout.name, workout_path(workout) %> - <%= workout.date %>
+    </li>
+  </ul>
+<% end %>
