@@ -8,4 +8,10 @@ class ApplicationController < ActionController::Base
   def current_user
     @current_user = User.second
   end
+
+  def load_show_workout_data
+    @workout_exercises = @workout.workout_exercises.includes(:exercise, :exercise_sets)
+
+    @exercises = Exercise.all
+  end
 end

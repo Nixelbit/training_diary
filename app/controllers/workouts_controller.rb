@@ -19,6 +19,10 @@ class WorkoutsController < ApplicationController
 
   def show
     find_workout
+
+    @workout_exercise = WorkoutExercise.new(workout: @workout)
+
+    load_show_workout_data
   end
 
   def edit

@@ -9,9 +9,9 @@
 <h3>Упражнения</h3>
 
 <ul>
-  <% @workout.workout_exercises.each do |workout_exercise| %>
+  <% @workout_exercises.each do |workout_exercise| %>
       <li>
-        <h4><%= workout_exercise.exercise.name %></h4>
+        <h4><%= workout_exercise.position %> - <%= workout_exercise.exercise.name %></h4>
 
         <ul>
           <% workout_exercise.exercise_sets.each do |exercise_set| %>
@@ -27,3 +27,19 @@
       </li>
   <% end %>
 </ul>
+
+<h3>Добавить упражнение</h3>
+
+<%= form_with model: [@workout, @workout_exercise] do |form| %>
+  <div>
+    <%= form.label :exercise_id, "Упражнения" %>
+    <%= form.collection_select :exercise_id, @exercises, :id, :name, prompt: "Выберите упражнение" %>
+  </div>
+
+  <div>
+    <%= form.label :position, "Позиция" %>
+    <%= form.number_field :position %>
+  </div>
+
+  <%= form.submit "Добавить" %>
+<% end %>
