@@ -9,7 +9,7 @@ class WorkoutExercisesController < ApplicationController
     else
       load_show_workout_data
 
-      render "workouts/show"
+      render "workouts/show", status: :unprocessable_content
     end
   end
 

@@ -31,6 +31,14 @@
 <h3>Добавить упражнение</h3>
 
 <%= form_with model: [@workout, @workout_exercise] do |form| %>
+  <% if @workout_exercise.errors.any? %>
+    <ul>
+      <% @workout_exercise.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  <% end %>
+
   <div>
     <%= form.label :exercise_id, "Упражнения" %>
     <%= form.collection_select :exercise_id, @exercises, :id, :name, prompt: "Выберите упражнение" %>
