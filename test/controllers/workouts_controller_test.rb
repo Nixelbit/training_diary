@@ -2,13 +2,13 @@ require "test_helper"
 
 class WorkoutsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @other_user = create(:user)
     @user = create(:user)
     @workout = create(:workout, user: @user)
   end
 
   test "index shows only current user's workouts" do
-    foreign_workout = create(:workout, user: @other_user, name: "Чужая тренировка")
+    other_user = create(:user)
+    foreign_workout = create(:workout, user: other_user, name: "Чужая тренировка")
 
     get workouts_path
 
@@ -51,7 +51,9 @@ class WorkoutsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "create ignores a user_id passed in params" do
-    post workouts_path, params: { workout: workout_params.merge(user_id: @other_user.id) }
+    other_user = create(:user)
+
+    post workouts_path, params: { workout: workout_params.merge(user_id: other_user.id) }
 
     workout = Workout.find_by(name: "Ноги")
     refute_nil workout
@@ -100,7 +102,8 @@ class WorkoutsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "another user's workout cannot be viewed" do
-    foreign_workout = create(:workout, user: @other_user)
+    other_user = create(:user)
+    foreign_workout = create(:workout, user: other_user)
 
     get workout_path(foreign_workout)
     assert_response :not_found
@@ -110,7 +113,8 @@ class WorkoutsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "another user's workout cannot be changed or deleted" do
-    foreign_workout = create(:workout, user: @other_user)
+    other_user = create(:user)
+    foreign_workout = create(:workout, user: other_user)
 
     patch workout_path(foreign_workout), params: { workout: workout_params(name: "Взлом") }
 
