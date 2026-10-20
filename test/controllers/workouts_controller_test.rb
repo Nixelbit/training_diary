@@ -63,7 +63,7 @@ class WorkoutsControllerTest < ActionDispatch::IntegrationTest
   test "create with a blank name renders the form with errors" do
     post workouts_path, params: { workout: workout_params(name: "") }
 
-    assert_response :success
+    assert_response :unprocessable_content
     assert_select "[data-test-id='workout-create-form']"
     assert_select "[data-test-id='workout-name-error']"
   end
@@ -87,7 +87,7 @@ class WorkoutsControllerTest < ActionDispatch::IntegrationTest
 
     patch workout_path(@workout), params: { workout: workout_params(name: "") }
 
-    assert_response :success
+    assert_response :unprocessable_content
     assert_select "[data-test-id='workout-update-form']"
     assert_select "[data-test-id='workout-name-error']"
     assert_equal original_name, @workout.reload.name
