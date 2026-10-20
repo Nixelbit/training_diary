@@ -1,4 +1,12 @@
-<%= form_with model: workout do |f| %>
+<%= form_with model: workout, data: { test_id: "workout-#{workout.persisted? ? "update" : "create"}-form" } do |f| %>
+  <% if workout.errors.any? %>
+    <ul class="errors" data-test-id="workout-form-errors">
+      <% workout.errors.each do |error| %>
+        <li data-test-id="workout-<%= error.attribute %>-error"><%= error.full_message %></li>
+      <% end %>
+    </ul>
+  <% end %>
+
   <div>
     <%= f.label :name %>
     <%= f.text_field :name %>

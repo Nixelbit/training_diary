@@ -1,6 +1,6 @@
-<h1><%= @workout.name %></h1>
+<h1 data-test-id="workout-name"><%= @workout.name %></h1>
 
-<p><%= @workout.date %></p>
+<p data-test-id="workout-date"><%= @workout.date %></p>
 
 <%= link_to "Редактировать тренировку", edit_workout_path(@workout) %>
 <%= button_to "Удалить тренировку", workout_path(@workout), method: :delete,
