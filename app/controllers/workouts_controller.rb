@@ -13,7 +13,7 @@ class WorkoutsController < ApplicationController
     if @workout.save
       redirect_to workouts_path
     else
-      render :new
+      render :new, status: :unprocessable_content
     end
   end
 
@@ -31,7 +31,7 @@ class WorkoutsController < ApplicationController
     if @workout.update(workout_params)
       redirect_to workout_path(@workout)
     else
-      render :edit
+      render :edit, status: :unprocessable_content
     end
   end
 
