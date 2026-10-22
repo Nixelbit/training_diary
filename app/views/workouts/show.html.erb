@@ -30,11 +30,13 @@
 
 <h3>Добавить упражнение</h3>
 
-<%= form_with model: [@workout, @workout_exercise] do |form| %>
+<%= form_with model: [@workout, @workout_exercise], data: {
+  test_id: "workout-exercise-#{@workout_exercise.persisted? ? 'update' : 'create'}-form"
+} do |form| %>
   <% if @workout_exercise.errors.any? %>
-    <ul>
-      <% @workout_exercise.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+    <ul class="errors" data-test-id="workout-exercise-form-errors">
+      <% @workout_exercise.errors.each do |error| %>
+        <li data-test-id="workout-exercise-<%= error.attribute %>-error"><%= error.full_message %></li>
       <% end %>
     </ul>
   <% end %>
