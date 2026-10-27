@@ -10,8 +10,41 @@
 
 <ul>
   <% @workout_exercises.each do |workout_exercise| %>
+    <% if @editing_workout_exercise == workout_exercise %>
+      <li style="list-style: none; margin-bottom: 15px;">
+        <%= form_with model: @editing_workout_exercise,
+          data: { test_id: "workout-exercise-update-form" } do |form| %>
+
+          <% if @editing_workout_exercise.errors.any? %>
+            <ul class="errors" style="color: red;" data-test-id="workout-exercise-update-form-errors">
+              <% @editing_workout_exercise.errors.each do |error| %>
+                <li data-test-id="workout-exercise-update-<%= error.attribute %>-error">
+                  <%= error.full_message %>
+                </li>
+              <% end %>
+            </ul>
+          <% end %>
+
+          <div>
+            <%= form.label :exercise_id, "Упражнения" %>
+            <%= form.collection_select :exercise_id, @exercises, :id, :name, prompt: "Выберите упражнение" %>
+          </div>
+
+          <div>
+            <%= form.label :position, "Позиция" %>
+            <%= form.number_field :position %>
+          </div>
+
+          <%= form.submit "Сохранить" %>
+          <%= link_to "Отмена", workout_path(@workout) %>
+        <% end %>
+      </li>
+    <% else %>
       <li>
-        <h4><%= workout_exercise.position %> - <%= workout_exercise.exercise.name %></h4>
+        <h4>
+          <%= workout_exercise.position %> - <%= workout_exercise.exercise.name %>
+        </h4>
+        <%= link_to "Редактировать", workout_path(@workout, edit_exercise_id: workout_exercise.id) %>
 
         <ul>
           <% workout_exercise.exercise_sets.each do |exercise_set| %>
@@ -25,6 +58,7 @@
           <% end %>
         </ul>
       </li>
+    <% end %>
   <% end %>
 </ul>
 

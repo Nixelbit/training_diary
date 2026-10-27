@@ -23,6 +23,8 @@ class WorkoutsController < ApplicationController
     @workout_exercise = WorkoutExercise.new(workout: @workout)
 
     load_show_workout_data
+
+    load_editing_exercise
   end
 
   def edit
@@ -48,6 +50,10 @@ class WorkoutsController < ApplicationController
   end
 
   private
+
+  def load_editing_exercise
+    @editing_workout_exercise = WorkoutExercise.find_by(id: params[:edit_exercise_id])
+  end
 
   def find_workout
     @workout = current_user.workouts.find(params[:id])

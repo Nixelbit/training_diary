@@ -13,6 +13,24 @@ class WorkoutExercisesController < ApplicationController
     end
   end
 
+  def update
+    workout_exercise = WorkoutExercise.find(params[:id])
+
+    if workout_exercise.update(workout_exercise_params)
+      redirect_to workout_path(workout_exercise.workout)
+    else
+      @workout = workout_exercise.workout
+
+      @editing_workout_exercise = workout_exercise
+
+      @workout_exercise = WorkoutExercise.new(workout: @workout)
+
+      load_show_workout_data
+
+      render "workouts/show", status: :unprocessable_content
+    end
+  end
+
   private
 
   def workout_exercise_params
