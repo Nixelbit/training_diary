@@ -12,33 +12,17 @@
   <% @workout_exercises.each do |workout_exercise| %>
     <% if @editing_workout_exercise == workout_exercise %>
       <li style="list-style: none; margin-bottom: 15px;">
-        <%= render "workout_exercises/form", workout_exercise: @editing_workout_exercise, workout: @workout, exercises: @exercises %>
+        <%= render "workout_exercises/form",
+          workout_exercise: @editing_workout_exercise, workout: @workout, exercises: @exercises %>
       </li>
     <% else %>
-      <li>
-        <h4>
-          <%= workout_exercise.position %> - <%= workout_exercise.exercise.name %>
-        </h4>
-        <%= link_to "Редактировать", workout_path(@workout, edit_exercise_id: workout_exercise.id) %>
-        <%= button_to "Удалить упражнение", workout_exercise_path(workout_exercise), method: :delete,
-          form: { data: { turbo_confirm: "Вы уверены, что хотите удалить упражнение?" } } %>
-
-        <ul>
-          <% workout_exercise.exercise_sets.each do |exercise_set| %>
-            <li>
-              <strong>Подход: №<%= exercise_set.position %>:</strong>
-              <%= exercise_set.weight %> кг х <%= exercise_set.repetitions %> повторений
-              <% if exercise_set.notes.present? %>
-                <small>(Примечание: <%= exercise_set.notes %>)</small>
-              <% end %>
-            </li>
-          <% end %>
-        </ul>
-      </li>
+      <%= render "workout_exercises/workout_exercise",
+        workout_exercise: workout_exercise, workout: @workout %>
     <% end %>
   <% end %>
 </ul>
 
 <h3>Добавить упражнение</h3>
 
-<%= render "workout_exercises/form", workout_exercise: @workout_exercise, workout: @workout, exercises: @exercises %>
+<%= render "workout_exercises/form",
+  workout_exercise: @workout_exercise, workout: @workout, exercises: @exercises %>
