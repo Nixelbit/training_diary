@@ -12,32 +12,7 @@
   <% @workout_exercises.each do |workout_exercise| %>
     <% if @editing_workout_exercise == workout_exercise %>
       <li style="list-style: none; margin-bottom: 15px;">
-        <%= form_with model: @editing_workout_exercise,
-          data: { test_id: "workout-exercise-update-form" } do |form| %>
-
-          <% if @editing_workout_exercise.errors.any? %>
-            <ul class="errors" style="color: red;" data-test-id="workout-exercise-update-form-errors">
-              <% @editing_workout_exercise.errors.each do |error| %>
-                <li data-test-id="workout-exercise-update-<%= error.attribute %>-error">
-                  <%= error.full_message %>
-                </li>
-              <% end %>
-            </ul>
-          <% end %>
-
-          <div>
-            <%= form.label :exercise_id, "Упражнения" %>
-            <%= form.collection_select :exercise_id, @exercises, :id, :name, prompt: "Выберите упражнение" %>
-          </div>
-
-          <div>
-            <%= form.label :position, "Позиция" %>
-            <%= form.number_field :position %>
-          </div>
-
-          <%= form.submit "Сохранить" %>
-          <%= link_to "Отмена", workout_path(@workout) %>
-        <% end %>
+        <%= render "workout_exercises/form", workout_exercise: @editing_workout_exercise, workout: @workout, exercises: @exercises %>
       </li>
     <% else %>
       <li>
@@ -66,26 +41,4 @@
 
 <h3>Добавить упражнение</h3>
 
-<%= form_with model: [@workout, @workout_exercise], data: {
-  test_id: "workout-exercise-#{@workout_exercise.persisted? ? 'update' : 'create'}-form"
-} do |form| %>
-  <% if @workout_exercise.errors.any? %>
-    <ul class="errors" data-test-id="workout-exercise-form-errors">
-      <% @workout_exercise.errors.each do |error| %>
-        <li data-test-id="workout-exercise-<%= error.attribute %>-error"><%= error.full_message %></li>
-      <% end %>
-    </ul>
-  <% end %>
-
-  <div>
-    <%= form.label :exercise_id, "Упражнения" %>
-    <%= form.collection_select :exercise_id, @exercises, :id, :name, prompt: "Выберите упражнение" %>
-  </div>
-
-  <div>
-    <%= form.label :position, "Позиция" %>
-    <%= form.number_field :position %>
-  </div>
-
-  <%= form.submit "Добавить" %>
-<% end %>
+<%= render "workout_exercises/form", workout_exercise: @workout_exercise, workout: @workout, exercises: @exercises %>
