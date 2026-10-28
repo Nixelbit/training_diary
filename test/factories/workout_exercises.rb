@@ -2,6 +2,6 @@ FactoryBot.define do
   factory :workout_exercise do
     workout
     exercise
-    position { 1 }
+    sequence(:position) { |n| n }
   end
 end

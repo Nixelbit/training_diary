@@ -9,21 +9,21 @@
 <h3>Упражнения</h3>
 
 <ul>
-  <% @workout.workout_exercises.each do |workout_exercise| %>
-      <li>
-        <h4><%= workout_exercise.exercise.name %></h4>
-
-        <ul>
-          <% workout_exercise.exercise_sets.each do |exercise_set| %>
-            <li>
-              <strong>Подход: №<%= exercise_set.position %>:</strong>
-              <%= exercise_set.weight %> кг х <%= exercise_set.repetitions %> повторений
-              <% if exercise_set.notes.present? %>
-                <small>(Примечание: <%= exercise_set.notes %>)</small>
-              <% end %>
-            </li>
-          <% end %>
-        </ul>
+  <% @workout_exercises.each do |workout_exercise| %>
+    <% if @editing_workout_exercise == workout_exercise %>
+      <li style="list-style: none; margin-bottom: 15px;">
+        <h4><%= workout_exercise.position %> - <%= workout_exercise.exercise.name %></h4>
+        <%= render "workout_exercises/form",
+          workout_exercise: @editing_workout_exercise, workout: @workout, exercises: @exercises %>
       </li>
+    <% else %>
+      <%= render "workout_exercises/workout_exercise",
+        workout_exercise: workout_exercise, workout: @workout %>
+    <% end %>
   <% end %>
 </ul>
+
+<h3>Добавить упражнение</h3>
+
+<%= render "workout_exercises/form",
+  workout_exercise: @workout_exercise, workout: @workout, exercises: @exercises %>

@@ -1,0 +1,27 @@
+<% persisted = workout_exercise.persisted? %>
+<%= form_with model: persisted ? workout_exercise : [workout, workout_exercise], data: {
+  test_id: "workout-exercise-#{persisted ? 'update' : 'create'}-form"
+} do |form| %>
+  <% if workout_exercise.errors.any? %>
+    <ul class="errors" style="color: red;" data-test-id="workout-exercise-form-errors">
+      <% workout_exercise.errors.each do |error| %>
+        <li data-test-id="workout-exercise-<%= error.attribute %>-error">
+          <%= error.full_message %>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+
+  <div>
+    <%= form.label :exercise_id, "Упражнение" %>
+    <%= form.collection_select :exercise_id, exercises, :id, :name, prompt: "Выберите упражнение" %>
+  </div>
+
+  <div>
+    <%= form.label :position, "Позиция" %>
+    <%= form.number_field :position %>
+  </div>
+
+  <%= form.submit(persisted ? "Сохранить" : "Добавить") %>
+  <%= link_to "Отмена", workout_path(workout) %>
+<% end %>
