@@ -58,4 +58,13 @@ class WorkoutExercisesControllerTest < ActionDispatch::IntegrationTest
     assert_select "[data-test-id='workout-exercise-update-form']"
     assert_select "[data-test-id='workout-exercise-create-form']"
   end
+
+  test "destroy removes the workout_exercise" do
+    assert_difference("WorkoutExercise.count", -1) do
+      delete workout_exercise_path(@workout_exercise)
+    end
+
+    assert_redirected_to workout_path(@workout)
+    assert_equal "Упражнение удалено", flash[:notice]
+  end
 end

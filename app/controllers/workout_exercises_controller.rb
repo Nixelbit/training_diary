@@ -31,6 +31,14 @@ class WorkoutExercisesController < ApplicationController
     end
   end
 
+  def destroy
+    workout_exercise = WorkoutExercise.find(params[:id])
+
+    workout_exercise.destroy
+
+    redirect_to workout_path(workout_exercise.workout), notice: "Упражнение удалено"
+  end
+
   private
 
   def workout_exercise_params
