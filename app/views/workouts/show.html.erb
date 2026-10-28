@@ -12,6 +12,7 @@
   <% @workout_exercises.each do |workout_exercise| %>
     <% if @editing_workout_exercise == workout_exercise %>
       <li style="list-style: none; margin-bottom: 15px;">
+        <h4><%= workout_exercise.position %> - <%= workout_exercise.exercise.name %></h4>
         <%= render "workout_exercises/form",
           workout_exercise: @editing_workout_exercise, workout: @workout, exercises: @exercises %>
       </li>
