@@ -2,8 +2,8 @@ class ExerciseSet < ApplicationRecord
   belongs_to :workout_exercise
 
   validates :repetitions, numericality: {
-      only_integer: true, greater_than: 0, less_than: 10_000
-    }
+    only_integer: true, greater_than: 0, less_than: 10_000
+  }
 
   # weight is rounded to 2 decimal places by the column type decimal (5,2).
   # If the column type is changed, revisit the validation bounds and tests.
@@ -12,7 +12,7 @@ class ExerciseSet < ApplicationRecord
   }
 
   validates :position, uniqueness: { scope: :workout_exercise_id },
-    numericality: { only_integer: true, greater_than: 0 }
+    numericality: { only_integer: true, greater_than: 0, less_than: 10_000 }
 
   validates :notes, length: { maximum: 2_000 }, allow_blank: true
 end
