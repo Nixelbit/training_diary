@@ -3,7 +3,7 @@ FactoryBot.define do
     workout_exercise
     weight { 60.5 }
     repetitions { 10 }
-    position { 1 }
-    notes { nil }
+    sequence(:position) { |n| n }
+    notes { "comment" }
   end
 end
