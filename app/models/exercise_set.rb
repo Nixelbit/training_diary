@@ -5,6 +5,8 @@ class ExerciseSet < ApplicationRecord
       only_integer: true, greater_than: 0, less_than: 10_000
     }
 
+  # weight is rounded to 2 decimal places by the column type decimal (5,2).
+  # If the column type is changed, revisit the validation bounds and tests.
   validates :weight, allow_nil: true, numericality: {
     greater_than_or_equal_to: 0, less_than_or_equal_to: 999.99
   }
