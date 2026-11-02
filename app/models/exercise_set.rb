@@ -14,5 +14,6 @@ class ExerciseSet < ApplicationRecord
   validates :position, uniqueness: { scope: :workout_exercise_id },
     numericality: { only_integer: true, greater_than: 0, less_than: 10_000 }
 
-  validates :notes, length: { maximum: 2_000 }, allow_blank: true
+  normalizes :notes, with: ->(n) { n&.strip.presence }
+  validates :notes, length: { maximum: 2_000 }, allow_nil: true
 end
