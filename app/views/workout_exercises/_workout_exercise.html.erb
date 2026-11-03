@@ -5,12 +5,12 @@
     form: { data: { turbo_confirm: "Вы уверены, что хотите удалить упражнение?" } } %>
 
   <ul>
-    <% workout_exercise.exercise_sets.each do |exercise_set| %>
+    <% workout_exercise.exercise_sets.each do |set| %>
       <li>
-        <strong>Подход: №<%= exercise_set.position %>:</strong>
-        <%= exercise_set.weight %> кг х <%= exercise_set.repetitions %> повторений
-        <% if exercise_set.notes.present? %>
-          <small>(Примечание: <%= exercise_set.notes %>)</small>
+        <strong>Подход: №<%= set.position %>:</strong>
+        <%= set.weight %> кг х <%= set.repetitions %> повторений
+        <% if set.notes.present? %>
+          <small>(Примечание: <%= set.notes %>)</small>
         <% end %>
       </li>
     <% end %>
