@@ -4,6 +4,10 @@
   <%= button_to "Удалить упражнение", workout_exercise_path(workout_exercise), method: :delete,
     form: { data: { turbo_confirm: "Вы уверены, что хотите удалить упражнение?" } } %>
 
+  <% set_form_object = (exercise_set&.workout_exercise == workout_exercise) ?
+    exercise_set :
+    ExerciseSet.new(workout_exercise: workout_exercise) %>
+
   <ul>
     <% workout_exercise.exercise_sets.each do |set| %>
       <li>
@@ -15,4 +19,6 @@
       </li>
     <% end %>
   </ul>
+  <%= render "exercise_sets/form",
+    workout: workout, workout_exercise: workout_exercise, exercise_set: set_form_object %>
 </li>
