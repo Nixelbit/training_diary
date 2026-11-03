@@ -19,6 +19,9 @@
       </li>
     <% end %>
   </ul>
-  <%= render "exercise_sets/form",
-    workout: workout, workout_exercise: workout_exercise, exercise_set: set_form_object %>
+  <details <% if set_form_object.errors.any? %>open<% end %>>
+    <summary>Добавить подход</summary>
+    <%= render "exercise_sets/form",
+      workout: workout, workout_exercise: workout_exercise, exercise_set: set_form_object %>
+  </details>
 </li>
