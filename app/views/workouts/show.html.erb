@@ -18,7 +18,8 @@
       </li>
     <% else %>
       <%= render "workout_exercises/workout_exercise",
-        workout_exercise: workout_exercise, workout: @workout %>
+        workout_exercise: workout_exercise, workout: @workout,
+        exercise_set: @exercise_set, editing_exercise_set: @editing_exercise_set %>
     <% end %>
   <% end %>
 </ul>

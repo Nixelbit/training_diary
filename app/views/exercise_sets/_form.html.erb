@@ -1,0 +1,37 @@
+<% persisted = exercise_set.persisted? %>
+<%= form_with model: persisted ? exercise_set : [workout, workout_exercise, exercise_set], data: {
+  test_id: "exercise-set-#{exercise_set.persisted? ? 'update' : 'create'}-form"
+} do |form| %>
+  <% if exercise_set.errors.any? %>
+    <ul class="errors" style="color: red;" data-test-id="exercise-set-form-errors">
+      <% exercise_set.errors.each do |error| %>
+        <li data-test-id="exercise-set-<%= error.attribute %>-error">
+          <%= error.full_message %>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+
+  <div>
+    <%= form.label :weight, "Вес" %>
+    <%= form.number_field :weight, step: 0.01, min: 0, max: 999.99 %>
+  </div>
+
+  <div>
+    <%= form.label :repetitions, "Количество повторений" %>
+    <%= form.number_field :repetitions, min: 1, max: 9999, required: true %>
+  </div>
+
+  <div>
+    <%= form.label :position, "Позиция" %>
+    <%= form.number_field :position, min: 1, required: true %>
+  </div>
+
+  <div>
+    <%= form.label :notes, "Примечание" %>
+    <%= form.text_area :notes, maxlength: 2_000, rows: 3 %>
+  </div>
+
+  <%= form.submit(persisted ? "Сохранить" : "Добавить") %>
+  <%= link_to "Отмена", workout_path(workout) %>
+<% end %>

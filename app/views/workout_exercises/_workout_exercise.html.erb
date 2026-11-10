@@ -4,15 +4,32 @@
   <%= button_to "Удалить упражнение", workout_exercise_path(workout_exercise), method: :delete,
     form: { data: { turbo_confirm: "Вы уверены, что хотите удалить упражнение?" } } %>
 
+  <% set_form_object = (exercise_set&.workout_exercise == workout_exercise) ?
+    exercise_set :
+    ExerciseSet.new(workout_exercise: workout_exercise) %>
+
   <ul>
-    <% workout_exercise.exercise_sets.each do |exercise_set| %>
-      <li>
-        <strong>Подход: №<%= exercise_set.position %>:</strong>
-        <%= exercise_set.weight %> кг х <%= exercise_set.repetitions %> повторений
-        <% if exercise_set.notes.present? %>
-          <small>(Примечание: <%= exercise_set.notes %>)</small>
-        <% end %>
-      </li>
+    <% workout_exercise.exercise_sets.each do |set| %>
+      <% if editing_exercise_set == set %>
+        <%= render "exercise_sets/form",
+          exercise_set: editing_exercise_set, workout_exercise: workout_exercise, workout: workout %>
+      <% else %>
+        <li>
+          <strong>Подход: №<%= set.position %>:</strong>
+          <%= set.weight %> кг х <%= set.repetitions %> повторений
+          <% if set.notes.present? %>
+            <small>(Примечание: <%= set.notes %>)</small>
+          <% end %>
+          <%= link_to "Редактировать", workout_path(workout, edit_exercise_set_id: set.id) %>
+          <%= button_to "Удалить подход", exercise_set_path(set), method: :delete,
+            form: { data: { turbo_confirm: "Вы уверены, что хотите удалить подход?" } } %>
+        </li>
+      <% end %>
     <% end %>
   </ul>
+  <details <% if set_form_object.errors.any? %>open<% end %>>
+    <summary>Добавить подход</summary>
+    <%= render "exercise_sets/form",
+      workout: workout, workout_exercise: workout_exercise, exercise_set: set_form_object %>
+  </details>
 </li>
