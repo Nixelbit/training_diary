@@ -24,7 +24,8 @@
   <% end %>
 </ul>
 
-<h3>Добавить упражнение</h3>
-
-<%= render "workout_exercises/form",
-  workout_exercise: @workout_exercise, workout: @workout, exercises: @exercises %>
+<details>
+  <summary>Добавить упражнение</summary>
+  <%= render "workout_exercises/form",
+    workout_exercise: @workout_exercise, workout: @workout, exercises: @exercises %>
+</details>
