@@ -5,6 +5,7 @@ class ExerciseSetsControllerTest < ActionDispatch::IntegrationTest
     @user = create(:user)
     @workout = create(:workout, user: @user)
     @workout_exercise = create(:workout_exercise, workout: @workout)
+    @exercise_set = create(:exercise_set, workout_exercise: @workout_exercise)
   end
 
   test "create exercise_set and redirects to workout" do
@@ -34,6 +35,28 @@ class ExerciseSetsControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :unprocessable_content
     assert_select "[data-test-id='exercise-set-create-form']"
+    assert_select "[data-test-id='exercise-set-form-errors']"
+  end
+
+  test "update saves changes and redirects to workout" do
+    patch exercise_set_path(@exercise_set), params: {
+      exercise_set: { repetitions: 50 }
+    }
+
+    assert_redirected_to workout_path(@workout)
+    assert_equal 50, @exercise_set.reload.repetitions
+  end
+
+  test "update with invalid params re-renders the form" do
+    original_repetitions = @exercise_set.repetitions
+
+    patch exercise_set_path(@exercise_set), params: {
+      exercise_set: { repetitions: nil }
+    }
+
+    assert_response :unprocessable_content
+    assert_equal original_repetitions, @exercise_set.reload.repetitions
+    assert_select "[data-test-id='exercise-set-update-form']"
     assert_select "[data-test-id='exercise-set-form-errors']"
   end
 end

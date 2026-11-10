@@ -10,13 +10,19 @@
 
   <ul>
     <% workout_exercise.exercise_sets.each do |set| %>
-      <li>
-        <strong>Подход: №<%= set.position %>:</strong>
-        <%= set.weight %> кг х <%= set.repetitions %> повторений
-        <% if set.notes.present? %>
-          <small>(Примечание: <%= set.notes %>)</small>
-        <% end %>
-      </li>
+      <% if editing_exercise_set == set %>
+        <%= render "exercise_sets/form",
+          exercise_set: editing_exercise_set, workout_exercise: workout_exercise, workout: workout %>
+      <% else %>
+        <li>
+          <strong>Подход: №<%= set.position %>:</strong>
+          <%= set.weight %> кг х <%= set.repetitions %> повторений
+          <% if set.notes.present? %>
+            <small>(Примечание: <%= set.notes %>)</small>
+          <% end %>
+          <%= link_to "Редактировать", workout_path(workout, edit_exercise_set_id: set.id) %>
+        </li>
+      <% end %>
     <% end %>
   </ul>
   <details <% if set_form_object.errors.any? %>open<% end %>>
