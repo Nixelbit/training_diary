@@ -1,6 +1,6 @@
 class ExerciseSetsController < ApplicationController
   def create
-    @workout_exercise = WorkoutExercise.find(params[:workout_exercise_id])
+    @workout_exercise = current_user.workout_exercises.find(params[:workout_exercise_id])
 
     @exercise_set = @workout_exercise.exercise_sets.build(exercise_set_params)
 
@@ -18,7 +18,7 @@ class ExerciseSetsController < ApplicationController
   end
 
   def update
-    exercise_set = ExerciseSet.find(params[:id])
+    exercise_set = current_user.exercise_sets.find(params[:id])
 
     if exercise_set.update(exercise_set_params)
       redirect_to workout_path(exercise_set.workout_exercise.workout)
@@ -36,7 +36,7 @@ class ExerciseSetsController < ApplicationController
   end
 
   def destroy
-    exercise_set = ExerciseSet.find(params[:id])
+    exercise_set = current_user.exercise_sets.find(params[:id])
 
     exercise_set.destroy
 
