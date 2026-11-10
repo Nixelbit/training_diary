@@ -21,6 +21,8 @@
             <small>(Примечание: <%= set.notes %>)</small>
           <% end %>
           <%= link_to "Редактировать", workout_path(workout, edit_exercise_set_id: set.id) %>
+          <%= button_to "Удалить подход", exercise_set_path(set), method: :delete,
+            form: { data: { turbo_confirm: "Вы уверены, что хотите удалить подход?" } } %>
         </li>
       <% end %>
     <% end %>

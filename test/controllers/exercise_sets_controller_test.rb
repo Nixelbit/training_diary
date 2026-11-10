@@ -59,4 +59,13 @@ class ExerciseSetsControllerTest < ActionDispatch::IntegrationTest
     assert_select "[data-test-id='exercise-set-update-form']"
     assert_select "[data-test-id='exercise-set-form-errors']"
   end
+
+  test "destroy removes the exercise_set" do
+    assert_difference("ExerciseSet.count", -1) do
+      delete exercise_set_path(@exercise_set)
+    end
+
+    assert_redirected_to workout_path(@workout)
+    assert_equal "Подход удален", flash[:notice]
+  end
 end

@@ -35,6 +35,14 @@ class ExerciseSetsController < ApplicationController
     end
   end
 
+  def destroy
+    exercise_set = ExerciseSet.find(params[:id])
+
+    exercise_set.destroy
+
+    redirect_to workout_path(exercise_set.workout_exercise.workout), notice: "Подход удален"
+  end
+
   private
 
   def exercise_set_params
