@@ -14,7 +14,7 @@ class WorkoutExercisesController < ApplicationController
   end
 
   def update
-    workout_exercise = WorkoutExercise.find(params[:id])
+    workout_exercise = current_user.workout_exercises.find(params[:id])
 
     if workout_exercise.update(workout_exercise_params)
       redirect_to workout_path(workout_exercise.workout)
@@ -32,7 +32,7 @@ class WorkoutExercisesController < ApplicationController
   end
 
   def destroy
-    workout_exercise = WorkoutExercise.find(params[:id])
+    workout_exercise = current_user.workout_exercises.find(params[:id])
 
     workout_exercise.destroy
 

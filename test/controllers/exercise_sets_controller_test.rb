@@ -68,4 +68,58 @@ class ExerciseSetsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to workout_path(@workout)
     assert_equal "Подход удален", flash[:notice]
   end
+
+  test "another user's exercise set cannot be created" do
+    other_user = create(:user)
+    foreign_workout = create(:workout, user: other_user)
+    foreign_workout_exercise = create(:workout_exercise, workout: foreign_workout)
+
+    assert_no_difference("ExerciseSet.count") do
+      post workout_workout_exercise_exercise_sets_path(@workout, foreign_workout_exercise), params: {
+        exercise_set: { weight: 50, repetitions: 10, position: 1 }
+      }
+    end
+
+    assert_response :not_found
+  end
+
+  test "another user's exercise set cannot be changed" do
+    other_user = create(:user)
+    foreign_workout = create(:workout, user: other_user)
+    foreign_workout_exercise = create(:workout_exercise, workout: foreign_workout)
+    foreign_exercise_set = create(:exercise_set, workout_exercise: foreign_workout_exercise)
+
+    patch exercise_set_path(foreign_exercise_set), params: {
+      exercise_set: { repetitions: 666 }
+    }
+
+    assert_response :not_found
+    refute_equal 666, foreign_exercise_set.reload.repetitions
+  end
+
+  test "another user's exercise set cannot be deleted" do
+    other_user = create(:user)
+    foreign_workout = create(:workout, user: other_user)
+    foreign_workout_exercise = create(:workout_exercise, workout: foreign_workout)
+    foreign_exercise_set = create(:exercise_set, workout_exercise: foreign_workout_exercise)
+
+    delete exercise_set_path(foreign_exercise_set)
+
+    assert_response :not_found
+    assert ExerciseSet.exists?(foreign_exercise_set.id)
+  end
+
+  test "create ignores workout_exercise_id passed in params" do
+    other_user = create(:user)
+    foreign_workout = create(:workout, user: other_user)
+    foreign_workout_exercise = create(:workout_exercise, workout: foreign_workout)
+
+    post workout_workout_exercise_exercise_sets_path(@workout, @workout_exercise), params: {
+      exercise_set: { weight: 50, repetitions: 10, position: 1, workout_exercise_id: foreign_workout_exercise.id }
+    }
+
+    created = @workout_exercise.exercise_sets.order(:id).last
+    assert_equal @workout_exercise, created.workout_exercise
+    refute_equal foreign_workout_exercise, created.workout_exercise
+  end
 end

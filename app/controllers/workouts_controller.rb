@@ -54,11 +54,11 @@ class WorkoutsController < ApplicationController
   private
 
   def load_editing_set
-    @editing_exercise_set = ExerciseSet.find_by(id: params[:edit_exercise_set_id])
+    @editing_exercise_set = current_user.exercise_sets.find_by(id: params[:edit_exercise_set_id])
   end
 
   def load_editing_exercise
-    @editing_workout_exercise = WorkoutExercise.find_by(id: params[:edit_exercise_id])
+    @editing_workout_exercise = current_user.workout_exercises.find_by(id: params[:edit_exercise_id])
   end
 
   def find_workout
