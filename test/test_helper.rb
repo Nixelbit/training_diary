@@ -3,8 +3,6 @@ require_relative "../config/environment"
 require "rails/test_help"
 require_relative "test_helpers/session_test_helper"
 
-require_relative "support/test_current_user_resolver"
-
 module ActiveSupport
   class TestCase
     include FactoryBot::Syntax::Methods
@@ -15,5 +13,3 @@ module ActiveSupport
     # Add more helper methods to be used by all tests here...
   end
 end
-
-ApplicationController.singleton_class.prepend(TestCurrentUserResolver)

@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  root "workouts#index"
+
   resource :session
   resources :passwords, param: :token
   resources :workouts do
