@@ -5,12 +5,12 @@ class PasswordsControllerTest < ActionDispatch::IntegrationTest
     @user = create(:user)
   end
 
-  test "new" do
+  test "renders the reset request form" do
     get new_password_path
     assert_response :success
   end
 
-  test "create" do
+  test "enqueues a reset email and redirects" do
     post passwords_path, params: { email_address: @user.email_address }
     assert_enqueued_email_with PasswordsMailer, :reset, args: [ @user ]
     assert_redirected_to new_session_path
@@ -28,7 +28,7 @@ class PasswordsControllerTest < ActionDispatch::IntegrationTest
     assert_notice "reset instructions sent"
   end
 
-  test "edit" do
+  test "renders the password reset form" do
     get edit_password_path(@user.password_reset_token)
     assert_response :success
   end
@@ -41,7 +41,7 @@ class PasswordsControllerTest < ActionDispatch::IntegrationTest
     assert_notice "reset link is invalid"
   end
 
-  test "update" do
+  test "updates the password with a valid token" do
     assert_changes -> { @user.reload.password_digest } do
       put password_path(@user.password_reset_token), params: { password: "new", password_confirmation: "new" }
       assert_redirected_to new_session_path
@@ -51,7 +51,7 @@ class PasswordsControllerTest < ActionDispatch::IntegrationTest
     assert_notice "Password has been reset"
   end
 
-  test "update with non matching passwords" do
+  test "does not update the password when they do not match" do
     token = @user.password_reset_token
     assert_no_changes -> { @user.reload.password_digest } do
       put password_path(token), params: { password: "no", password_confirmation: "match" }
