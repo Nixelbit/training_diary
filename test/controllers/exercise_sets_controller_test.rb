@@ -3,6 +3,7 @@ require "test_helper"
 class ExerciseSetsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @user = create(:user)
+    sign_in_as(@user)
     @workout = create(:workout, user: @user)
     @workout_exercise = create(:workout_exercise, workout: @workout)
     @exercise_set = create(:exercise_set, workout_exercise: @workout_exercise)
