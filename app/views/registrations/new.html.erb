@@ -1,0 +1,26 @@
+<h1>Регистрация</h1>
+
+<%= form_with model: @user, url: sign_up_path do |form| %>
+  <% if @user.errors.any? %>
+    <ul class="errors" style="color: red;" data-test-id="user-form-errors">
+      <% @user.errors.each do |error| %>
+        <li data-test-id="user-<%= error.attribute %>-error">
+          <%= error.full_message %>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+
+  <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username",
+    placeholder: "Введите адрес электронной почты" %><br>
+
+  <%= form.password_field :password, required: true,
+    placeholder: "Введите пароль", maxlength: 72 %><br>
+
+  <%= form.password_field :password_confirmation, required: true,
+    placeholder: "Подтвердите пароль", maxlength: 72 %><br>
+  <%= form.submit "Зарегистрироваться" %>
+<% end %>
+
+<%= link_to "Войти в аккаунт", new_session_path %>
+<%= link_to "Забыли пароль?", new_password_path %>

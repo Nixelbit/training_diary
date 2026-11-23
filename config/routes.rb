@@ -3,6 +3,9 @@ Rails.application.routes.draw do
 
   resource :session
   resources :passwords, param: :token
+  get "sign_up", to: "registrations#new", as: :sign_up
+  post "sign_up", to: "registrations#create"
+
   resources :workouts do
     resources :workout_exercises, only: [ :index, :new, :create ] do
       resources :exercise_sets, only: [ :index, :new, :create ]
