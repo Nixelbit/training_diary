@@ -13,7 +13,7 @@ class PasswordsController < ApplicationController
       PasswordsMailer.reset(user).deliver_later
     end
 
-    redirect_to new_session_path,
+    redirect_to sign_in_path,
       notice: "Инструкции по сбросу пароля отправлены (если пользователь с таким адресом существует)."
   end
 
@@ -23,7 +23,7 @@ class PasswordsController < ApplicationController
   def update
     if @user.update(params.permit(:password, :password_confirmation))
       @user.sessions.destroy_all
-      redirect_to new_session_path, notice: "Пароль был сброшен."
+      redirect_to sign_in_path, notice: "Пароль был сброшен."
     else
       redirect_to edit_password_path(params[:token]), alert: "Пароли не совпадают."
     end

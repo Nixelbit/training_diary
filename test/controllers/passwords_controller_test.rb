@@ -13,7 +13,7 @@ class PasswordsControllerTest < ActionDispatch::IntegrationTest
   test "enqueues a reset email and redirects" do
     post passwords_path, params: { email_address: @user.email_address }
     assert_enqueued_email_with PasswordsMailer, :reset, args: [ @user ]
-    assert_redirected_to new_session_path
+    assert_redirected_to sign_in_path
 
     follow_redirect!
     assert_notice "Инструкции по сбросу пароля отправлены"
@@ -22,7 +22,7 @@ class PasswordsControllerTest < ActionDispatch::IntegrationTest
   test "create for an unknown user redirects but sends no mail" do
     post passwords_path, params: { email_address: "missing-user@example.com" }
     assert_enqueued_emails 0
-    assert_redirected_to new_session_path
+    assert_redirected_to sign_in_path
 
     follow_redirect!
     assert_notice "Инструкции по сбросу пароля отправлены"
@@ -44,7 +44,7 @@ class PasswordsControllerTest < ActionDispatch::IntegrationTest
   test "updates the password with a valid token" do
     assert_changes -> { @user.reload.password_digest } do
       put password_path(@user.password_reset_token), params: { password: "new", password_confirmation: "new" }
-      assert_redirected_to new_session_path
+      assert_redirected_to sign_in_path
     end
 
     follow_redirect!

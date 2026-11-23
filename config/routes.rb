@@ -1,8 +1,12 @@
 Rails.application.routes.draw do
   root "workouts#index"
 
-  resource :session
+  get "sign_in", to: "sessions#new", as: :sign_in
+  post "sign_in", to: "sessions#create"
+  delete "sign_out", to: "sessions#destroy", as: :sign_out
+
   resources :passwords, param: :token
+
   get "sign_up", to: "registrations#new", as: :sign_up
   post "sign_up", to: "registrations#create"
 
