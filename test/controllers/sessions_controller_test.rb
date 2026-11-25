@@ -18,7 +18,7 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "does not sign in with invalid credentials" do
-    post sign_in_path, params: { email_address: @user.email_address, password: "wrong" }
+    post sign_in_path, params: { email_address: @user.email_address, password: "wrongpassword" }
 
     assert_redirected_to sign_in_path
     assert_nil cookies[:session_id]
