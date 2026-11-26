@@ -2,7 +2,7 @@
 
 <%= tag.div(flash[:alert], style: "color:red") if flash[:alert] %>
 
-<%= form_with url: passwords_path do |form| %>
+<%= form_with url: passwords_path, data: { test_id: "password-request-form"} do |form| %>
   <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username",
     placeholder: "Введите адрес электронной почты", value: params[:email_address] %><br>
   <%= form.submit "Отправить инструкции по сбросу" %>
