@@ -1,10 +1,10 @@
 <h1>Регистрация</h1>
 
-<%= form_with model: @user, url: sign_up_path do |form| %>
+<%= form_with model: @user, url: sign_up_path, data: { test_id: "registration-create-form"} do |form| %>
   <% if @user.errors.any? %>
-    <ul class="errors" style="color: red;" data-test-id="user-form-errors">
+    <ul class="errors" style="color: red;" data-test-id="registration-form-errors">
       <% @user.errors.each do |error| %>
-        <li data-test-id="user-<%= error.attribute %>-error">
+        <li data-test-id="registration-<%= error.attribute %>-error">
           <%= error.full_message %>
         </li>
       <% end %>
