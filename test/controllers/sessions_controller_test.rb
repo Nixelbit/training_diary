@@ -7,7 +7,9 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
 
   test "renders the login form" do
     get sign_in_path
+
     assert_response :success
+    assert_select "[data-test-id='session-create-form']"
   end
 
   test "signs in with valid credentials" do
@@ -22,6 +24,7 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to sign_in_path
     assert_nil cookies[:session_id]
+    assert_equal "Проверьте адрес электронной почты и пароль.", flash[:alert]
   end
 
   test "signs out and clears the session cookie" do
