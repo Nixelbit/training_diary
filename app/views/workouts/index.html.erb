@@ -2,10 +2,14 @@
 
 <%= link_to "Создать новую тренировку", new_workout_path %>
 
-<ul>
-  <% @workouts.each do |workout| %>
-    <li>
-      <%= link_to workout.name, workout_path(workout), data: { test_id: "workout-name" } %> - <%= workout.date %>
-    </li>
-  <% end %>
-</ul>
+<% if @workouts.any? %>
+  <ul>
+    <% @workouts.each do |workout| %>
+      <li>
+        <%= link_to workout.name, workout_path(workout), data: { test_id: "workout-name" } %> - <%= workout.date %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>У вас пока нет тренировок. Создайте первую!</p>
+<% end %>

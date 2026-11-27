@@ -1,0 +1,6 @@
+<p>
+  Вы можете сбросить пароль на
+  <%= link_to "этой странице сброса пароля", edit_password_url(@user.password_reset_token) %>.
+
+  Срок действия этой ссылки истекает через <%= distance_of_time_in_words(0, @user.password_reset_token_expires_in) %>.
+</p>

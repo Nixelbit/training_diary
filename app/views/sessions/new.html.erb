@@ -1,0 +1,16 @@
+<h1>Войти в аккаунт</h1>
+
+<%= tag.div(flash[:alert], style: "color:red") if flash[:alert] %>
+<%= tag.div(flash[:notice], style: "color:green") if flash[:notice] %>
+
+<%= form_with url: sign_in_path, data: { test_id: "session-create-form"} do |form| %>
+  <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username",
+    placeholder: "Введите адрес электронной почты", value: params[:email_address] %><br>
+  <%= form.password_field :password, required: true, autocomplete: "current-password",
+    placeholder: "Введите пароль", maxlength: 72 %><br>
+  <%= form.submit "Войти" %>
+<% end %>
+<br>
+
+<%= link_to "Забыли пароль?", new_password_path %>
+<%= link_to "Зарегистрироваться", sign_up_path %>
